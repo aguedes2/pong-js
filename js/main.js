@@ -6,6 +6,6 @@ window.onload = function () {
   console.log('carregando o jogo Pong')
   entity.ball.init(cnv)
   entity.racket.playerRacket.init(cnv)
-  entity.racket.enemyRacket.init(cnv)
+  entity.racket.enemyRacket.init(entity.ball.ypos, cnv)
   base.gameLoop()
 }
