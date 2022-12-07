@@ -1,5 +1,6 @@
 import { width, height, ctx, cnv } from './constants.js'
 import entity from './entities.js'
+import draw from './scoreboard.js'
 
 cnv.width = width
 cnv.height = height
@@ -25,9 +26,10 @@ function cleanRect() {
 
 function render() {
   drawCourt()
-  entity.ball.draw(cnv, ctx)
+  entity.ball.draw(ctx)
   entity.racket.playerRacket.draw(ctx)
   entity.racket.enemyRacket.draw(ctx)
+  draw(ctx) //scoreboard
 }
 
 export default render

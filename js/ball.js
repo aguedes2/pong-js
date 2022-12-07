@@ -1,5 +1,6 @@
-var playerPts = 0
-var enemyPts = 0
+var playerPts
+var enemyPts
+
 let ball = {
   xpos: 0,
   ypos: 0,
@@ -7,44 +8,44 @@ let ball = {
   yvel: 5,
   size: 10,
   color: 'white',
-  init: function (cnv) {
-    this.xpos = (cnv.width - this.size) / 2
-    this.ypos = (cnv.height - this.size) / 2
+  init: function (w, h) {
+    this.xpos = (w - this.size) / 2
+    this.ypos = (h - this.size) / 2
     this.yvel = Math.floor(Math.random() * 2) < 1 ? -this.yvel : this.yvel
     this.xvel = Math.floor(Math.random() * 2) < 1 ? -this.xvel : this.xvel
+    playerPts = 0
+    enemyPts = 0
   },
-  update: function (cnv) {
-    this.checkForCanvasCollisions(cnv)
+  update: function (w, h) {
+    this.checkForCanvasCollisions(w, h)
     this.xpos += this.xvel
     this.ypos += this.yvel
   },
-  draw: function (cnv, ctx) {
+  draw: function (ctx) {
     ctx.fillStyle = this.color
     ctx.beginPath()
     ctx.arc(this.xpos, this.ypos, this.size, 0, Math.PI * 2, true)
     ctx.fill()
   },
   showPoints: function () {
-    return [playerPts, enemyPts]
+    let pontuacao = []
+    pontuacao[0] = playerPts
+    pontuacao[1] = enemyPts
+    return pontuacao
   },
-  checkForCanvasCollisions: function (cnv) {
+  checkForCanvasCollisions: function (w, h) {
     if (this.xpos - this.size / 2 < 0) {
       this.xvel = -this.xvel
-      setTimeout(() => {
-        enemyPts++
-      }, 1000)
+      enemyPts++
+      this.xpos = 2 * this.size + 1
     }
 
-    if (this.xpos + this.size / 2 > cnv.width) {
+    if (this.xpos + this.size / 2 > w) {
       this.xvel = -this.xvel
-      setTimeout(() => {
-        playerPts++
-      }, 1000)
+      playerPts++
+      this.xpos = w - 2 * this.size + 1
     }
-    if (
-      this.ypos + this.size / 2 > cnv.height ||
-      this.ypos - this.size / 2 < 0
-    ) {
+    if (this.ypos + this.size / 2 > h || this.ypos - this.size / 2 < 0) {
       this.yvel = -this.yvel
     }
   },
