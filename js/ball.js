@@ -1,5 +1,6 @@
 var playerPts
 var enemyPts
+const pontos = new Audio('../assets/ponto.mp3')
 
 let ball = {
   xpos: 0,
@@ -38,12 +39,14 @@ let ball = {
       this.xvel = -this.xvel
       enemyPts++
       this.xpos = 2 * this.size + 1
+      pontos.play()
     }
 
     if (this.xpos + this.size / 2 > w) {
       this.xvel = -this.xvel
       playerPts++
       this.xpos = w - 2 * this.size + 1
+      pontos.play()
     }
     if (this.ypos + this.size / 2 > h || this.ypos - this.size / 2 < 0) {
       this.yvel = -this.yvel
@@ -68,7 +71,9 @@ let ball = {
     let collide = !(leftPlayer || rightPlayer || abovePlayer || belowPlayer)
 
     if (collide) {
+      let raquetada = new Audio('../assets/raquetada.mp3')
       this.deflection(racket.ypos, racket.height)
+      raquetada.play()
     }
   }
 }
